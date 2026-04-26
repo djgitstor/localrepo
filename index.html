@@ -1,18 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>ShopHub - Your Online Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .cart-icon, .user-icon {
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .cart-icon:hover, .user-icon:hover {
+            color: #e74c3c;
+        }
+
+        .cart-count {
+            position: absolute;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            margin-top: -10px;
+            margin-left: 10px;
+        }
+
+        /* Hero Section */
+
+        .hero {
+            /*background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
+
+            /* Background image with a dark linear-gradient overlay */
+            background: linear-gradient(rgb(72 83 130 / 70%), rgb(70 64 77 / 70%)), url(https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop);
+                        
+            
+            background-size: cover;       /* Image ko poore section mein fill karega */
+            background-position: center;  /* Image ko center mein align karega */
+            background-attachment: fixed; /* Optional: Scroll karte waqt parallax effect dega */
+            
+            color: white;
+            /*padding: 6rem 2rem;*/
+            padding: 8rem 2rem;           /* extra padding for  display */
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;             /* Ensure karta hai ki hero section ki height achhi dikhe */
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: #e74c3c;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #c0392b;
+        }
+
+        /* Featured Products */
+        .featured {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            max-width: 120%;
+            max-height: 110%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #c0392b;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ecf0f1;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: #ecf0f1;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #3498db;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+    </style>
 </head>
-
 <body>
-    <p>this is a new repo</p>
-    <p>This is a new feature (DropDown)</p>
-    <p>This is a new feature (menu)</p>
-    <p>This is a new feature (Tab)</p>
-</body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">ShopHub</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="user-icon">👤</div>
+                <div class="cart-icon">🛒<span class="cart-count">0</span></div>
+            </div>
+        </nav>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to ShopHub</h1>
+            <p>Your one-stop shop for quality products at affordable prices</p>
+            <a href="#shop" class="cta-button">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured" id="shop">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1619296794093-3df1ae6819a8?w=400&auto=format&fit=crop&q=60" alt="Wireless Headphones">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Wireless Headphones</h3>
+                    <p class="product-price">$99.99</p>
+                    <p class="product-description">Premium sound quality with noise cancellation</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&auto=format&fit=crop&q=60" alt="Smart Watch">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Smart Watch</h3>
+                    <p class="product-price">$149.99</p>
+                    <p class="product-description">Track your fitness and receive notifications</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1529359744902-86b2ab9edaea?w=400&auto=format&fit=crop&q=60" alt="Bluetooth Speaker">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Bluetooth Speaker</h3>
+                    <p class="product-price">$79.99</p>
+                    <p class="product-description">Portable speaker with 20-hour battery life</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1623251606108-512c7c4a3507?w=400&auto=format&fit=crop&q=60" alt="Laptop Stand">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Laptop Stand</h3>
+                    <p class="product-price">$29.99</p>
+                    <p class="product-description">Ergonomic stand for improved posture</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>We are a leading online retailer offering quality products at competitive prices.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#shop">Shop</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>123 Shopping Street</p>
+                <p>Anytown, USA 12345</p>
+                <p>Phone: (123) 456-7890</p>
+                <p>Email: info@shophub.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#">📱</a>
+                    <a href="#">📘</a>
+                    <a href="#">📷</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 ShopHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Add to Cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const product = this.closest('.product-card');
+                const title = product.querySelector('.product-title').textContent;
+                const price = product.querySelector('.product-price').textContent;
+                
+                // Update cart count
+                const cartCount = document.querySelector('.cart-count');
+                let count = parseInt(cartCount.textContent);
+                count++;
+                cartCount.textContent = count;
+                
+                // Show a simple notification
+                alert(`Added ${title} to cart for ${price}`);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Optional: Add animation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.classList.add('fade-in');
+            });
+        });
+    </script>
+</body>
 </html>
