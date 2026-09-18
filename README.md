@@ -56,7 +56,7 @@
 <ol>
   <li>
     <b>Clone Repository:</b> Kisi naye system par is repo ko clone karne ke liye run karein:
-    <pre><code>git clone https://github.com/skgitstor/localrepo.git</code></pre>
+    <pre><code>git clone https://github.com/djgitstor/localrepo.git</code></pre>
   </li>
   <li>
     <b>Naya System Setup:</b> Agar naya machine ya fresh Git install kiya hai, toh sabse pehle <code>Notes.md</code> ke <b>Section 1</b> se global identity config karein.
