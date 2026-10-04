@@ -21,5 +21,3 @@ And increment this number by one:
 ```
 And that’s it. Now when you relaunch Photoshop you will be prompted to login and you should see fresh 7 days of trial.
 
-# Download
-[Or download trial reset here](https://filipmolcik.com/free-photoshop-on-mac-os-x-photoshop-trial-reset/)
